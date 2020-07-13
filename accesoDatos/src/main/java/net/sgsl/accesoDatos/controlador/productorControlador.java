@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.productorServicios;
+import net.sgsl.accesoDatos.entidades.Productor;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
-import net.sgsl.accesoDatos.logicaNegocio.Productor;
 
 @RestController
 @CrossOrigin(origins = "*")

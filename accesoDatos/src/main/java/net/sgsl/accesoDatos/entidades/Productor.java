@@ -1,4 +1,4 @@
-package net.sgsl.accesoDatos.logicaNegocio;
+package net.sgsl.accesoDatos.entidades;
 
 import javax.persistence.*;
 
