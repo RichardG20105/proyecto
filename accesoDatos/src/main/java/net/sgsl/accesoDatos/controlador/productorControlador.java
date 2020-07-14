@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.productorServicios;
 import net.sgsl.accesoDatos.entidades.Productor;
+import net.sgsl.accesoDatos.controlador.telefonoControlador;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 @RestController
@@ -26,11 +27,13 @@ public class productorControlador {
 	
 	@Autowired
 	private productorServicios productorServicio;
+	
 	//getProductores
 	@GetMapping("buscarproductor")
 	public List<Productor> getProductores(){
 		return this.productorServicio.findAll();
 	}
+	
 	//getProductorCedula
 	@GetMapping("/buscarproductor/{id}")
 	public ResponseEntity<Productor> getProductorId(@PathVariable(value = "id") Long id_productor)
@@ -39,11 +42,13 @@ public class productorControlador {
 			.orElseThrow(() -> new ResourceNotFoundException("No existe Productor con el id ::"+id_productor));
 			return ResponseEntity.ok().body(productor);
 	}
-	//saveProductor
+	
+	//crearProductor
 	@PostMapping("productor")
 	public Productor crearProductor(@RequestBody Productor productor) {
 		return this.productorServicio.save(productor);
 	}
+	
 	//updateProductor
 	@PutMapping("productor/{id}")
 	public ResponseEntity<Productor> updateProductor(@PathVariable(value = "id") Long id_productor,@Valid @RequestBody Productor productorDetails) throws ResourceNotFoundException{
@@ -54,7 +59,6 @@ public class productorControlador {
 		productor.setApellido(productorDetails.getApellido());
 		productor.setDireccion(productorDetails.getDireccion());
 		productor.setEmail(productorDetails.getEmail());		
-		
 		
 		return ResponseEntity.ok(this.productorServicio.save(productor));
 	}
