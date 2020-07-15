@@ -1,6 +1,7 @@
 package net.sgsl.accesoDatos.entidades;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "cultivo")
@@ -14,14 +15,14 @@ public class Cultivo {
 	@Column(name = "detalle_cult")
 	private String detalle_cult;
 	@Column(name = "cant_cult")
-	private String cant_cult;
+	private Integer cant_cult;
 	@Column(name = "fecha_cult")
-	private String fecha_cult;
+	private Date fecha_cult;
 	
 	public Cultivo() {
 		super();
 	}
-	public Cultivo(String nombre_cult, String detalle_cult, String cant_cult, String fecha_cult) {
+	public Cultivo(String nombre_cult, String detalle_cult, Integer cant_cult, Date fecha_cult) {
 		super();
 		this.nombre_cult = nombre_cult;
 		this.detalle_cult = detalle_cult;
@@ -46,16 +47,16 @@ public class Cultivo {
 	public void setDetalle_cult(String detalle_cult) {
 		this.detalle_cult = detalle_cult;
 	}
-	public String getCant_cult() {
+	public Integer getCant_cult() {
 		return cant_cult;
 	}
-	public void setCant_cult(String cant_cult) {
+	public void setCant_cult(Integer cant_cult) {
 		this.cant_cult = cant_cult;
 	}
-	public String getFecha_cult() {
+	public Date getFecha_cult() {
 		return fecha_cult;
 	}
-	public void setFecha_cult(String fecha_cult) {
+	public void setFecha_cult(Date fecha_cult) {
 		this.fecha_cult = fecha_cult;
 	}
 }
