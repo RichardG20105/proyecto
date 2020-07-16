@@ -1,11 +1,7 @@
 package net.sgsl.accesoDatos.entidades;
 
 import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import java.sql.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "cultivo")
@@ -21,6 +17,7 @@ public class Cultivo {
 	@Column(name = "cant_cult")
 	private Integer cant_cult;
 	@Column(name = "fecha_cult")
+	@Temporal (TemporalType.DATE)
 	private Date fecha_cult;
 	
 	public Cultivo() {
