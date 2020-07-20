@@ -45,7 +45,7 @@ public class productorControlador {
 	
 	//crearProductor
 	@PostMapping("productor")
-	public Productor crearProductor(@RequestBody Productor productor) {
+	public Productor crearProductor(@Valid @RequestBody Productor productor) {
 		return this.productorServicio.save(productor);
 	}
 	

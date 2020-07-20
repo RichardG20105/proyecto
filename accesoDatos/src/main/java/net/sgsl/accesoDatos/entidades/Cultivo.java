@@ -17,13 +17,12 @@ public class Cultivo {
 	@Column(name = "cant_cult")
 	private Integer cant_cult;
 	@Column(name = "fecha_cult")
-	@Temporal (TemporalType.DATE)
-	private Date fecha_cult;
+	private String fecha_cult;
 	
 	public Cultivo() {
 		super();
 	}
-	public Cultivo(String nombre_cult, String detalle_cult, Integer cant_cult, Date fecha_cult) {
+	public Cultivo(String nombre_cult, String detalle_cult, Integer cant_cult, String fecha_cult) {
 		super();
 		this.nombre_cult = nombre_cult;
 		this.detalle_cult = detalle_cult;
@@ -54,10 +53,10 @@ public class Cultivo {
 	public void setCant_cult(Integer cant_cult) {
 		this.cant_cult = cant_cult;
 	}
-	public Date getFecha_cult() {
+	public String getFecha_cult() {
 		return fecha_cult;
 	}
-	public void setFecha_cult(Date fecha_cult) {
+	public void setFecha_cult(String fecha_cult) {
 		this.fecha_cult = fecha_cult;
 	}
 }

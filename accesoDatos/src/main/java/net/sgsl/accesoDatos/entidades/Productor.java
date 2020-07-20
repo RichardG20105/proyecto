@@ -1,6 +1,15 @@
 package net.sgsl.accesoDatos.entidades;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 @Entity
 @Table(name="Productor")
@@ -21,18 +30,24 @@ public class Productor {
 	@Column(name = "email")
 	private String email;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_productor",referencedColumnName="id_productor")
+	private List<Telefono> telefono = new ArrayList<>();
+	
 	public Productor() {
 		super();
-	}
-	public Productor(String cedula, String nombre, String apellido, String direccion, String email) {
+	}	
+	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
+			List<Telefono> telefono) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
+		this.telefono = telefono;
 	}
-	
+
 	public long getId_productor() {
 		return id_productor;
 	}
@@ -68,5 +83,11 @@ public class Productor {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public List<Telefono> getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(List<Telefono> telefono) {
+		this.telefono = telefono;
 	}
 }
