@@ -31,22 +31,22 @@ public class Productor {
 	private String email;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_productor",referencedColumnName="id_productor")
-	private List<Telefono> telefono = new ArrayList<>();
+	@JoinColumn(name = "id_productor")
+	private Set<Telefono> tel = new HashSet<>();
 	
 	public Productor() {
 		super();
 	}	
-	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
-			List<Telefono> telefono) {
+	public Productor(String cedula, String nombre, String apellido, String direccion, String email, Telefono tel) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
-		this.telefono = telefono;
+		this.tel = tel;
 	}
+
 
 	public long getId_productor() {
 		return id_productor;
@@ -84,10 +84,11 @@ public class Productor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<Telefono> getTelefono() {
-		return telefono;
+	public Telefono getTel() {
+		return tel;
 	}
-	public void setTelefono(List<Telefono> telefono) {
-		this.telefono = telefono;
+	public void setTel(Telefono tel) {
+		this.tel = tel;
 	}
+	
 }

@@ -22,22 +22,14 @@ import net.sgsl.accesoDatos.Repository.productorServicios;
 import net.sgsl.accesoDatos.Repository.telefonoServicios;
 @RestController
 @CrossOrigin
-@RequestMapping("/productores/")
+@RequestMapping("/telefonos/")
 public class telefonoControlador {
 	@Autowired
 	private telefonoServicios telefonoServicio;
-	@Autowired
-	private productorServicios productorServicio;
 	//buscartelefono
-	@GetMapping("{id_prod}/buscartelefono")
-	public Optional<Telefono> getTelefono(@PathVariable(value = "id_prod") Long id_productor){
-		return this.telefonoServicio.findById(id_productor);
-	}
-	//crearTelefono
-	@PostMapping("{id_prod}/telefono")
-	public Telefono crearTelefono(@PathVariable(value = "id_prod") Long id_productor,@Valid @RequestBody Telefono telefono) throws ResourceNotFoundException {
-		productorServicio.findById(id_productor).orElseThrow(()->new ResourceNotFoundException("Productor no Encontrado"));
-		return telefonoServicio.save(telefono);
+	@GetMapping("buscartelefono")
+	public List<Telefono> getTelefonos(){
+		return this.telefonoServicio.findAll();
 	}
 	//Actualizar
 	@PutMapping("{id_prod}tel/{id_tel}")

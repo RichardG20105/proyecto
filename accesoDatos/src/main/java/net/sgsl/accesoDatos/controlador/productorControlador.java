@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.productorServicios;
+import net.sgsl.accesoDatos.Repository.telefonoServicios;
 import net.sgsl.accesoDatos.entidades.Productor;
 import net.sgsl.accesoDatos.controlador.telefonoControlador;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
@@ -27,6 +28,9 @@ public class productorControlador {
 	
 	@Autowired
 	private productorServicios productorServicio;
+	
+	@Autowired
+	private telefonoServicios telefonoServicio;
 	
 	//getProductores
 	@GetMapping("buscarproductor")
