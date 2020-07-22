@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 import net.sgsl.accesoDatos.entidades.Terreno;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/terrenos/")
 public class terrenoControlador {
 	
@@ -31,7 +33,7 @@ public class terrenoControlador {
 	
 	 // listado de todos los terrenos
 	
-	@GetMapping ("terrenos")
+	@GetMapping ("buscarTerrenos")
 	public List< Terreno > getTerrenos(){
 		 return this.terrrenoServicio.findAll();
 	} 
@@ -54,7 +56,7 @@ public class terrenoControlador {
 	
 	// update terreno mediante su id
 	
-	@PutMapping("modificarTerreno/{id}")
+	@PutMapping("terreno/{id}")
 	public ResponseEntity<Terreno> updateTerreno(@PathVariable(value = "id") Long id_terreno ,@Valid @RequestBody Terreno terrenoDetails) throws ResourceNotFoundException{
 		Terreno terreno = terrrenoServicio.findById(id_terreno)
 				.orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id :"+ id_terreno));

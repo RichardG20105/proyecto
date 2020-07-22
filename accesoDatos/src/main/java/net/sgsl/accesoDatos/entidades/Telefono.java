@@ -2,28 +2,26 @@ package net.sgsl.accesoDatos.entidades;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 @Entity
 @Table(name = "telefono_productor")
 public class Telefono {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_telefono;
 	@Column(name = "telefono")
 	private String telefono;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name  = "id_productor")
+	private Productor productor;
+	
 	public Telefono() {
 		super();
 	}
-
-	public Telefono(String telefono, Productor productor) {
+	public Telefono(String telefono) {
 		super();
 		this.telefono = telefono;
 	}
-
 	public Long getId_telefono() {
 		return id_telefono;
 	}
@@ -39,4 +37,8 @@ public class Telefono {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}	
+	public void setProductor(Productor productor) {
+		this.productor = productor;
+	}
+	
 }

@@ -33,13 +33,18 @@ public class productorControlador {
 	private telefonoServicios telefonoServicio;
 	
 	//getProductores
-	@GetMapping("buscarproductor")
+	@GetMapping("buscarproductores")
 	public List<Productor> getProductores(){
 		return this.productorServicio.findAll();
 	}
 	
 	//getProductorCedula
-	@GetMapping("/buscarproductor/{id}")
+	@GetMapping("/buscarproductor/{ced}")
+	public ResponseEntity<List<Productor>> getProductorCed(@PathVariable(value = "ced") String cedula) {
+		List<Productor> productor = productorServicio.findByCedula(cedula);	
+		return ResponseEntity.ok().body(productor);
+	}
+	@GetMapping("/buscarproductorid/{id}")
 	public ResponseEntity<Productor> getProductorId(@PathVariable(value = "id") Long id_productor)
 		throws ResourceNotFoundException{
 			Productor productor = productorServicio.findById(id_productor)
@@ -50,6 +55,7 @@ public class productorControlador {
 	//crearProductor
 	@PostMapping("productor")
 	public Productor crearProductor(@Valid @RequestBody Productor productor) {
+		
 		return this.productorServicio.save(productor);
 	}
 	
