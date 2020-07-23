@@ -46,6 +46,9 @@ public class usuarioControlador {
 	@PostMapping("usuario/{id_rol}")
 	public Usuario crearUsuario(@PathVariable(value = "id_rol")Long id_rol,@Valid @RequestBody Usuario usuario)
 			throws ResourceNotFoundException {
+		if(usuarioServicio.existsByUsername(usuario.getUsername())) {
+			throw new ResourceNotFoundException("Ya existe un usuario con ese Username");
+		}
 		return rolServicio.findById(id_rol).map(ro->{
 			usuario.setRoles(ro);
 			return usuarioServicio.save(usuario);

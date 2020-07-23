@@ -10,4 +10,5 @@ import net.sgsl.accesoDatos.entidades.Usuario;
 @Repository
 public interface usuarioServicios extends JpaRepository<Usuario, Long>{
 	Optional<Usuario> findByUsername(String username);
+	boolean existsByUsername(String username);
 }
