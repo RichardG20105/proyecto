@@ -35,6 +35,14 @@ public class usuarioControlador {
 		return this.usuarioServicio.findAll();
 	}
 	
+	@GetMapping("buscarusuario/{username}")
+	public ResponseEntity<Usuario> getUsuarios(@PathVariable(value = "username")String username)
+			throws ResourceNotFoundException {
+		Usuario usuario = usuarioServicio.findByUsername(username)
+				.orElseThrow(()-> new ResourceNotFoundException("No existe el Usuario: "+username));
+		return ResponseEntity.ok().body(usuario);
+	}
+	
 	@PostMapping("usuario/{id_rol}")
 	public Usuario crearUsuario(@PathVariable(value = "id_rol")Long id_rol,@Valid @RequestBody Usuario usuario)
 			throws ResourceNotFoundException {
@@ -44,14 +52,15 @@ public class usuarioControlador {
 		}).orElseThrow(()-> new ResourceNotFoundException("No se encuentra el Rol"));
 	}
 	
-	@PutMapping("usuario/{username}")
-	public ResponseEntity<Usuario> updateUsuario(@PathVariable(value = "username")String username,@Valid @RequestBody Usuario usuarioDetails)
-	throws ResourceNotFoundException{
-		Usuario usuario = usuarioServicio.findByUsername(username)
-				.orElseThrow(()-> new ResourceNotFoundException("No existe un Usuario con el Username: "+username));
-		usuario.setUsername(usuarioDetails.getUsername());
-		usuario.setPassword(usuarioDetails.getPassword());
-		
-		return ResponseEntity.ok(this.usuarioServicio.save(usuario));
+	@PutMapping("usuario/{id_username}/rol/{id_rol}")
+	public Usuario updateUsuario(@PathVariable(value = "id_username")Long id_username,@PathVariable(value = "id_rol")Long id_rol,@Valid @RequestBody Usuario usuarioDetails) throws ResourceNotFoundException{
+	if(!rolServicio.existsById(id_rol)){
+		throw new ResourceNotFoundException("No existe el Rol con el Id: "+id_rol);
+	}
+	return usuarioServicio.findById(id_username).map(user -> {
+		user.setUsername(usuarioDetails.getUsername());
+		user.setPassword(usuarioDetails.getPassword());
+		return usuarioServicio.save(user);
+	}).orElseThrow(() -> new ResourceNotFoundException("No existe el Usuario con el Id: "+id_username));
 	}
 }
