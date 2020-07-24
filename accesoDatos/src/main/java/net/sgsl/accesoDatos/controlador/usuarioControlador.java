@@ -36,7 +36,7 @@ public class usuarioControlador {
 	}
 	
 	@GetMapping("buscarusuario/{username}")
-	public ResponseEntity<Usuario> getUsuarios(@PathVariable(value = "username")String username)
+	public ResponseEntity<Usuario> getUsuariosUsername(@PathVariable(value = "username")String username)
 			throws ResourceNotFoundException {
 		Usuario usuario = usuarioServicio.findByUsername(username)
 				.orElseThrow(()-> new ResourceNotFoundException("No existe el Usuario: "+username));
