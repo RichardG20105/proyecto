@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import net.sgsl.accesoDatos.entidades.Telefono;
 @Repository
-public interface telefonoServicios extends JpaRepository<Telefono, Long> {
+public interface telefonoServicios extends JpaRepository<Telefono, Long> { 
+	@Query(value = "SELECT * FROM telefono_productor WHERE id_productor=?1",nativeQuery=true)
+   List<Telefono> findByIdProductor(Long idProd);
 	//Optional(Telefono) findByIdAndProductorId(Long id_telefono,Long id_productor);
 }

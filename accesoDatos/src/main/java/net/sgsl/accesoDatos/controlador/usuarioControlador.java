@@ -64,6 +64,6 @@ public class usuarioControlador {
 		user.setUsername(usuarioDetails.getUsername());
 		user.setPassword(usuarioDetails.getPassword());
 		return usuarioServicio.save(user);
-	}).orElseThrow(() -> new ResourceNotFoundException("No existe el Usuario con el Id: "+id_username));
+		}).orElseThrow(() -> new ResourceNotFoundException("No existe el Usuario con el Id: "+id_username));
 	}
 }

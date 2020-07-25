@@ -2,7 +2,7 @@ package net.sgsl.accesoDatos.entidades;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "telefono_productor")
 @Table(name = "telefono_productor")
 public class Telefono {
 	@Id
@@ -11,7 +11,7 @@ public class Telefono {
 	@Column(name = "telefono")
 	private String telefono;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name  = "id_productor")
 	private Productor productor;
 	
@@ -40,5 +40,4 @@ public class Telefono {
 	public void setProductor(Productor productor) {
 		this.productor = productor;
 	}
-	
 }

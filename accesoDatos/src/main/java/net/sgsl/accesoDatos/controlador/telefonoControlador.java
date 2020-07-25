@@ -44,6 +44,11 @@ public class telefonoControlador {
 		Telefono tel = telefonoServicio.findById(id_telefono).orElseThrow(()-> new ResourceNotFoundException("No Existe el Telefono con ese Id"));
 		return new ResponseEntity<Telefono>(tel,HttpStatus.OK);
 	}
+	@GetMapping("productor/telefono/{id_productor}")
+	public List<Telefono> getTelefonoIdProductor(@PathVariable("id_productor")Long id_productor)throws ResourceNotFoundException{
+		return this.telefonoServicio.findByIdProductor(id_productor);
+	}
+	
 	//crearTelefono
 	@PostMapping("productor/{id_productor}/telefono")
 	public @Valid Telefono crearTelefono(@PathVariable(value = "id_productor") Long id_productor,@Valid @RequestBody Telefono telefono) throws ResourceNotFoundException{
@@ -53,7 +58,7 @@ public class telefonoControlador {
 		}).orElseThrow(()-> new ResourceNotFoundException("No existe un Productor con ese Id"));
 	}
 	//Actualizar
-	@PutMapping("{id_prod}tel/{id_tel}")
+	@PutMapping("{id_prod}/telefono/{id_tel}")
 	public ResponseEntity<Telefono> updateTelefono(@PathVariable(value = "id") Long id_telefono,@Valid @RequestBody Telefono telefonoDetails) throws ResourceNotFoundException{
 		Telefono telefono = telefonoServicio.findById(id_telefono)
 				.orElseThrow(() -> new ResourceNotFoundException("No existe el Telefono con el id :"+id_telefono));
