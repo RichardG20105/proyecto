@@ -31,21 +31,22 @@ public class Productor {
 	private String email;
 	
 	@OneToMany(mappedBy= "productor",fetch = FetchType.LAZY)
-	private Set<Telefono> telefonos;
+	private Set<Productor> terreno;
+	//private Set<Telefono> telefonos;
 	
 	public Productor() {
 		super();
 	}
 	
-	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
-			Set<Telefono> telefonos) {
+	public Productor(String cedula, String nombre, String apellido, String direccion, String email
+			) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
-		this.telefonos = telefonos;
+		
 	}
 
 	public long getId_productor() {
@@ -85,12 +86,6 @@ public class Productor {
 		this.email = email;
 	}
 
-	public Set<Telefono> getTelefonos() {
-		return telefonos;
-	}
 
-	public void setTelefonos(Set<Telefono> telefonos) {
-		this.telefonos = telefonos;
-	}
 	
 }

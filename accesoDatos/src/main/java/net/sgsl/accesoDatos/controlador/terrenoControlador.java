@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.sgsl.accesoDatos.Repository.productorServicios;
 import net.sgsl.accesoDatos.Repository.terrenoServicios;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 import net.sgsl.accesoDatos.entidades.Terreno;
+import net.sgsl.accesoDatos.entidades.Usuario;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,14 +33,20 @@ public class terrenoControlador {
 	@Autowired
 	private terrenoServicios terrrenoServicio;
 	
+	
+	@Autowired
+	private productorServicios productorServicio;
+	
 	 // listado de todos los terrenos
 	
 	@GetMapping ("buscarTerrenos")
 	public List< Terreno > getTerrenos(){
 		 return this.terrrenoServicio.findAll();
-	} 
+	}
+	
 	
 	// listar el terreno buscado por su id
+	
 	@GetMapping ("/buscarTerreno/{id}")
 	public ResponseEntity<Terreno> getTerrenoId(@PathVariable(value = "id") Long id_terreno)
 			throws ResourceNotFoundException{
@@ -47,14 +55,28 @@ public class terrenoControlador {
 				return ResponseEntity.ok().body(terrenos);
 	}
 	
+		
 	// save terreno
 	
-	@PostMapping("terreno")
-	public Terreno crearTerreno (@RequestBody Terreno terreno) {
-		return this.terrrenoServicio.save(terreno);
+	
+	@PostMapping("terreno/{id_productor}")
+	public Terreno crearTerreno(@PathVariable(value = "id_productor")Long id_productor,@Valid @RequestBody Terreno terreno)
+			throws ResourceNotFoundException {
+		if(terrrenoServicio.existsByDireccionTerreno(terreno.getDireccion_terreno())) {
+			throw new ResourceNotFoundException("Ya existe un terreno con esa direccion");
+		}
+		return productorServicio.findById(id_productor).map(ro->{
+			terreno.setProductor(ro);
+			return terrrenoServicio.save(terreno);
+		}).orElseThrow(()-> new ResourceNotFoundException("No se encuentra el Rol"));
 	}
 	
+	
+		
+
 	// update terreno mediante su id
+	
+	/*
 	
 	@PutMapping("terreno/{id}")
 	public ResponseEntity<Terreno> updateTerreno(@PathVariable(value = "id") Long id_terreno ,@Valid @RequestBody Terreno terrenoDetails) throws ResourceNotFoundException{
@@ -66,6 +88,9 @@ public class terrenoControlador {
 		
 		return ResponseEntity.ok(this.terrrenoServicio.save(terreno));
 	}
+	
+	
+	*/
 	
 	// delete terreno mediante su id 
 	@DeleteMapping("eliminarTerreno/{id}")
