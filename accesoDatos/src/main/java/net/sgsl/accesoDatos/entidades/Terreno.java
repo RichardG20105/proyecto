@@ -10,10 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Terreno")
+@Table(name="terreno")
 public class Terreno {
-	
-	
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_terreno;
@@ -33,14 +32,14 @@ public class Terreno {
 	}
 	
 	 public Terreno(long id_terreno , String direccion_terreno, int cant_hect ,Productor productor) {
-		super();
-		this.id_terreno = id_terreno;
-		this.direccion_terreno = direccion_terreno;
-		this.cant_hect = cant_hect;
-		this.productor = productor;
-	}
-
-
+			super();
+			this.id_terreno = id_terreno;
+			this.direccion_terreno = direccion_terreno;
+			this.cant_hect = cant_hect;
+			this.productor = productor;
+		}
+	
+	
 	public long getId_terreno() {
 		return id_terreno;
 	}

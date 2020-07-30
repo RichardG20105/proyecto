@@ -30,25 +30,26 @@ public class Productor {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToMany(mappedBy= "productor",fetch = FetchType.LAZY)
-	private Set<Productor> terreno;
+	@OneToMany(mappedBy= "productor",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Terreno> terreno;
 	//private Set<Telefono> telefonos;
 	
 	public Productor() {
 		super();
 	}
 	
-	public Productor(String cedula, String nombre, String apellido, String direccion, String email
-			) {
+	public Productor(String cedula, String nombre, String apellido, String direccion, String email , 
+			Set<Terreno> terreno	) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
+		this.terreno = terreno;
 		
 	}
-
+	
 	public long getId_productor() {
 		return id_productor;
 	}
@@ -84,6 +85,14 @@ public class Productor {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Terreno> getTerreno() {
+		return terreno;
+	}
+
+	public void setTerreno(Set<Terreno> terreno) {
+		this.terreno = terreno;
 	}
 
 
