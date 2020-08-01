@@ -15,6 +15,7 @@ public class Terreno {
 		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_terreno")
 	private long id_terreno;
 	
 	@Column (name="direccion_terreno")
@@ -31,23 +32,16 @@ public class Terreno {
 		super();
 	}
 	
-	 public Terreno(long id_terreno , String direccion_terreno, int cant_hect ,Productor productor) {
+	 public Terreno(String direccion_terreno, int cant_hect) {
 			super();
-			this.id_terreno = id_terreno;
+			
 			this.direccion_terreno = direccion_terreno;
 			this.cant_hect = cant_hect;
-			this.productor = productor;
+			
 		}
-	
-	
 	public long getId_terreno() {
 		return id_terreno;
 	}
-
-	public void setId_terreno(long id_terreno) {
-		this.id_terreno = id_terreno;
-	}
-
 	
 	public String getDireccion_terreno() {
 		return direccion_terreno;

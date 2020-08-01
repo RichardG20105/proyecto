@@ -23,7 +23,6 @@ import net.sgsl.accesoDatos.Repository.terrenoServicios;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 import net.sgsl.accesoDatos.entidades.Terreno;
-import net.sgsl.accesoDatos.entidades.Usuario;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -62,35 +61,34 @@ public class terrenoControlador {
 	@PostMapping("terreno/{id_productor}")
 	public Terreno crearTerreno(@PathVariable(value = "id_productor")Long id_productor,@Valid @RequestBody Terreno terreno)
 			throws ResourceNotFoundException {
-		if(terrrenoServicio.existsByDireccionTerreno(terreno.getDireccion_terreno())) {
+		if(terrrenoServicio.existsById(terreno.getId_terreno())) {
 			throw new ResourceNotFoundException("Ya existe un terreno con esa direccion");
 		}
 		return productorServicio.findById(id_productor).map(ro->{
 			terreno.setProductor(ro);
 			return terrrenoServicio.save(terreno);
-		}).orElseThrow(()-> new ResourceNotFoundException("No se encuentra el Rol"));
+		}).orElseThrow(()-> new ResourceNotFoundException("No se encuentra el productor"));
 	}
 	
 	
-		
+	
 
 	// update terreno mediante su id
 	
-	/*
+
 	
 	@PutMapping("terreno/{id}")
 	public ResponseEntity<Terreno> updateTerreno(@PathVariable(value = "id") Long id_terreno ,@Valid @RequestBody Terreno terrenoDetails) throws ResourceNotFoundException{
 		Terreno terreno = terrrenoServicio.findById(id_terreno)
 				.orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id :"+ id_terreno));
-		terreno.setId_productor(terrenoDetails.getId_productor());
-	    terreno.setDireccion_terreno(terrenoDetails.getDireccion_terreno());
+		terreno.setDireccion_terreno(terrenoDetails.getDireccion_terreno());
 		terreno.setCant_hect(terrenoDetails.getCant_hect());
 		
 		return ResponseEntity.ok(this.terrrenoServicio.save(terreno));
 	}
 	
 	
-	*/
+	
 	
 	// delete terreno mediante su id 
 	@DeleteMapping("eliminarTerreno/{id}")

@@ -12,7 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
-@Table(name="Productor")
+@Table(name="productor")
 public class Productor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,25 +30,25 @@ public class Productor {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToMany(mappedBy= "productor",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy= "productor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Terreno> terreno;
-	//private Set<Telefono> telefonos;
+	
 	
 	public Productor() {
 		super();
 	}
 	
-	public Productor(String cedula, String nombre, String apellido, String direccion, String email , 
-			Set<Terreno> terreno	) {
+	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
+		Set<Telefono> telefonos	) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
-		this.terreno = terreno;
 		
 	}
+	
 	
 	public long getId_productor() {
 		return id_productor;
@@ -87,14 +87,9 @@ public class Productor {
 		this.email = email;
 	}
 
-	public Set<Terreno> getTerreno() {
-		return terreno;
-	}
-
-	public void setTerreno(Set<Terreno> terreno) {
+    public void setTerreno(Set<Terreno> terreno) {
 		this.terreno = terreno;
 	}
-
-
+	
 	
 }

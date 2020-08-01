@@ -22,12 +22,21 @@ public class Usuario {
 	public Usuario() {
 		super();
 	}
-	public Usuario(String username, String password) {
+	public Usuario(long id_usuario ,String username, String password) {
 		super();
+		this.id_usuario = id_usuario;
 		this.username = username;
 		this.password = password;
 	}
 	
+	
+	
+	public Long getId_usuario() {
+		return id_usuario;
+	}
+	public void setId_usuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
+	}
 	public String getUsername() {
 		return username;
 	}

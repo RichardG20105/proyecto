@@ -33,7 +33,7 @@ public class productorControlador {
 	private telefonoServicios telefonoServicio;
 	
 	//getProductores
-	@GetMapping("buscarproductores")
+	@GetMapping("productor")
 	public List<Productor> getProductores(){
 		return this.productorServicio.findAll();
 	}
