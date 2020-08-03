@@ -1,12 +1,15 @@
 package net.sgsl.accesoDatos.controlador;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.rolServicios;
 import net.sgsl.accesoDatos.Repository.usuarioServicios;
+import net.sgsl.accesoDatos.entidades.Terreno;
 import net.sgsl.accesoDatos.entidades.Usuario;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
@@ -66,4 +70,18 @@ public class usuarioControlador {
 		return usuarioServicio.save(user);
 		}).orElseThrow(() -> new ResourceNotFoundException("No existe el Usuario con el Id: "+id_username));
 	}
+	
+	
+	// delete terreno mediante su id 
+		@DeleteMapping("eliminarUsuario/{id}")
+		public Map<String,Boolean> deleteUsuario(@PathVariable(value = "id") Long id_usuario) throws ResourceNotFoundException{
+			
+			Usuario usuario = usuarioServicio.findById(id_usuario)
+					.orElseThrow(() -> new ResourceNotFoundException("No existe el usuario con el id :"+ id_usuario));
+			        this.usuarioServicio.delete(usuario);
+			        
+			        Map<String,Boolean> response = new HashMap<>();
+			        response.put("delete", Boolean.TRUE);
+			   return response;
+		}
 }
