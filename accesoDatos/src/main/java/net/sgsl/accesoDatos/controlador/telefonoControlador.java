@@ -51,7 +51,7 @@ public class telefonoControlador {
 	
 	//crearTelefono
 	@PostMapping("productor/{id_productor}/telefono")
-	public @Valid Telefono crearTelefono(@PathVariable(value = "id_productor") Long id_productor,@Valid @RequestBody Telefono telefono) throws ResourceNotFoundException{
+	public Telefono crearTelefono(@PathVariable(value = "id_productor") Long id_productor,@Valid @RequestBody Telefono telefono) throws ResourceNotFoundException{
 		return productorServicio.findById(id_productor).map(prod ->{
 			telefono.setProductor(prod);
 			return telefonoServicio.save(telefono);
@@ -60,7 +60,8 @@ public class telefonoControlador {
 	//Actualizar
 	@PutMapping("productor/{id_prod}/telefono/{id_tel}")
 	public Telefono actualizarTelefono(@PathVariable(value = "id_prod")Long id_productor,
-			@PathVariable(value = "id_tel")Long id_telefono, @Valid @RequestBody Telefono telefono) throws ResourceNotFoundException {
+			@PathVariable(value = "id_tel")Long id_telefono,
+			@Valid @RequestBody Telefono telefono) throws ResourceNotFoundException {
 		if(!productorServicio.existsById(id_productor)) {
 			throw new ResourceNotFoundException("No existe el productor con el ID: "+id_productor);
 		}

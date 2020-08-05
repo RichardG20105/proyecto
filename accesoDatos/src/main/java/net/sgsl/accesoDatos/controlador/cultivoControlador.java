@@ -26,7 +26,7 @@ import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/cultivos/")
+@RequestMapping("/terrenos/")
 public class cultivoControlador {
 	@Autowired
 	private cultivoServicios cultivoServicio;
@@ -50,32 +50,29 @@ public class cultivoControlador {
 		}
 		
 		//crearCultivo
-		@PostMapping("cultivo")
-		public Cultivo crearCultivo(@RequestBody Cultivo cultivo) {
-			return this.cultivoServicio.save(cultivo);
-		}
-		
-		//Asignar Cultivo
-		
-		@PostMapping("cultivo/terreno{id_terreno}")
-		public Cultivo asignarCultivo(@PathVariable (value = "id_terreno")Long id_terreno,@Valid @RequestBody Cultivo cultivo)throws ResourceNotFoundException {
-			return terrenoServicio.findById(id_terreno).map(terr ->{
+		@PostMapping("terreno/{id_terr}/cultivo")
+		public Cultivo crearCultivo(@PathVariable(value = "id_terr")Long id_terreno,@Valid @RequestBody Cultivo cultivo) throws ResourceNotFoundException{
+			return terrenoServicio.findById(id_terreno).map(terr->{
 				cultivo.setTerreno(terr);
 				return cultivoServicio.save(cultivo);
-			}).orElseThrow(()-> new ResourceNotFoundException("No existe un Terreno con ese ID"));
+			}).orElseThrow(()->new ResourceNotFoundException("No existe el Terreno con el ID: "+id_terreno));
 		}
-		
+				
 		//updateCultivo
-		@PutMapping("cultivo/{id}")
-		public ResponseEntity<Cultivo> updateCultivo(@PathVariable(value = "id") Long id_cultivo,@Valid @RequestBody Cultivo cultivoDetails) throws ResourceNotFoundException{
-			Cultivo cultivo = cultivoServicio.findById(id_cultivo)
-					.orElseThrow(() -> new ResourceNotFoundException("No existe el Cultivo con el id :"+id_cultivo));
-			cultivo.setCant_cult(cultivoDetails.getCant_cult());	
-			cultivo.setDetalle_cult(cultivoDetails.getDetalle_cult());
-			cultivo.setFecha_cult(cultivoDetails.getFecha_cult());
-			cultivo.setNombre_cult(cultivoDetails.getNombre_cult());
-			
-			return ResponseEntity.ok(this.cultivoServicio.save(cultivo));
+		@PutMapping("terreno/{id_terr}/cultivo/{id_cul}")
+		public Cultivo updateCultivo(@PathVariable(value="id_terr")Long id_terreno,
+				@PathVariable(value = "id_cul") Long id_cultivo,
+				@Valid @RequestBody Cultivo cultivoDetails) throws ResourceNotFoundException{
+			if(!terrenoServicio.existsById(id_terreno)) {
+				throw new ResourceNotFoundException("No existe el Terreno con el ID: "+id_terreno);
+			}
+			return cultivoServicio.findById(id_cultivo).map(cult->{
+				cult.setCant_cult(cultivoDetails.getCant_cult());
+				cult.setDetalle_cult(cultivoDetails.getDetalle_cult());
+				cult.setFecha_cult(cultivoDetails.getFecha_cult());
+				cult.setNombre_cult(cultivoDetails.getNombre_cult());
+				return cultivoServicio.save(cult);
+			}).orElseThrow(()-> new ResourceNotFoundException("No existe el Cultivo con el ID: "+id_cultivo));			
 		}
 		//deleteCultivo
 		@DeleteMapping("cultivo/{id}")

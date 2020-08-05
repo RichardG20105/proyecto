@@ -46,7 +46,7 @@ public class terrenoControlador {
 	
 	// listar el terreno buscado por su id
 	
-	@GetMapping ("/buscarTerreno/{id}")
+	@GetMapping ("buscarTerreno/{id}")
 	public ResponseEntity<Terreno> getTerrenoId(@PathVariable(value = "id") Long id_terreno)
 			throws ResourceNotFoundException{
 				Terreno terrenos = terrrenoServicio.findById(id_terreno)
