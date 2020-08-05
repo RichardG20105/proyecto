@@ -58,12 +58,24 @@ public class telefonoControlador {
 		}).orElseThrow(()-> new ResourceNotFoundException("No existe un Productor con ese Id"));
 	}
 	//Actualizar
-	@PutMapping("{id_prod}/telefono/{id_tel}")
-	public ResponseEntity<Telefono> updateTelefono(@PathVariable(value = "id") Long id_telefono,@Valid @RequestBody Telefono telefonoDetails) throws ResourceNotFoundException{
-		Telefono telefono = telefonoServicio.findById(id_telefono)
-				.orElseThrow(() -> new ResourceNotFoundException("No existe el Telefono con el id :"+id_telefono));
-		telefono.setTelefono(telefonoDetails.getTelefono());		
-		
-		return ResponseEntity.ok(this.telefonoServicio.save(telefono));
+	@PutMapping("productor/{id_prod}/telefono/{id_tel}")
+	public Telefono actualizarTelefono(@PathVariable(value = "id_prod")Long id_productor,
+			@PathVariable(value = "id_tel")Long id_telefono, @Valid @RequestBody Telefono telefono) throws ResourceNotFoundException {
+		if(!productorServicio.existsById(id_productor)) {
+			throw new ResourceNotFoundException("No existe el productor con el ID: "+id_productor);
+		}
+		return telefonoServicio.findById(id_telefono).map(tel->{
+			tel.setTelefono(telefono.getTelefono());
+			return telefonoServicio.save(tel);
+		}).orElseThrow(()-> new ResourceNotFoundException("No existe el telefono con el ID: "+id_telefono));
+	}
+	//Eliminar un Telefono
+	@DeleteMapping("productor/{id_prod}/telefono/{id_tel}")
+	public ResponseEntity<?> borrarTelefono(@PathVariable(value = "id_prod")Long id_productor,
+			@PathVariable(value ="id_tel")Long id_telefono) throws ResourceNotFoundException{
+		return telefonoServicio.findByTelefonoAndProductor(id_telefono,id_productor).map(tel->{
+			telefonoServicio.delete(tel);
+			return ResponseEntity.ok().build();
+		}).orElseThrow(()-> new ResourceNotFoundException("No existe el Telefono con el ID: "+id_telefono+" o con el Productor con el ID: "+id_productor));
 	}
 }

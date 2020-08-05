@@ -1,12 +1,15 @@
 package net.sgsl.accesoDatos.controlador;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,4 +76,15 @@ public class productorControlador {
 		return ResponseEntity.ok(this.productorServicio.save(productor));
 	}
 	//deleteProductor
+	@DeleteMapping("productor/{id}")
+	public Map<String, Boolean> deleteProductor(@PathVariable(value = "id")Long id_productor) throws ResourceNotFoundException{
+		Productor productor = productorServicio.findById(id_productor)
+				.orElseThrow(()->new ResourceNotFoundException("El productor no exite con el ID: "+id_productor));
+		this.productorServicio.delete(productor);
+		
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("Se elimino el Productor", Boolean.TRUE);
+		
+		return response;
+	}
 }

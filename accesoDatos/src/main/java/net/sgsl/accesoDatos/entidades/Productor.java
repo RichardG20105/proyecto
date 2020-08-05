@@ -1,8 +1,5 @@
 package net.sgsl.accesoDatos.entidades;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -12,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
-@Table(name="productor")
+@Table(name="Productor")
 public class Productor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,26 +27,27 @@ public class Productor {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToMany(mappedBy= "productor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Terreno> terreno;
+	@OneToMany(mappedBy= "productor",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Telefono> telefonos;
 	
+	@OneToMany(mappedBy ="produc",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Terreno> terrenos;
 	
 	public Productor() {
 		super();
 	}
 	
 	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
-		Set<Telefono> telefonos	) {
+			Set<Telefono> telefonos) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.email = email;
-		
+		this.telefonos = telefonos;
 	}
-	
-	
+
 	public long getId_productor() {
 		return id_productor;
 	}
@@ -87,8 +85,20 @@ public class Productor {
 		this.email = email;
 	}
 
-    public void setTerreno(Set<Terreno> terreno) {
-		this.terreno = terreno;
+	public Set<Telefono> getTelefonos() {
+		return telefonos;
+	}
+
+	public void setTelefonos(Set<Telefono> telefonos) {
+		this.telefonos = telefonos;
+	}
+
+	public Set<Terreno> getTerrenos() {
+		return terrenos;
+	}
+
+	public void setTerrenos(Set<Terreno> terrenos) {
+		this.terrenos = terrenos;
 	}
 	
 	

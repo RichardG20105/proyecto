@@ -1,12 +1,15 @@
 package net.sgsl.accesoDatos.controlador;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.cultivoServicios;
+import net.sgsl.accesoDatos.Repository.terrenoServicios;
 import net.sgsl.accesoDatos.entidades.Cultivo;
+import net.sgsl.accesoDatos.entidades.Terreno;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 @RestController
@@ -26,6 +31,9 @@ public class cultivoControlador {
 	@Autowired
 	private cultivoServicios cultivoServicio;
 	
+	@Autowired
+	private terrenoServicios terrenoServicio;
+	
 	//getCultivos
 		@GetMapping("buscarcultivo")
 		public List<Cultivo> getCultivos(){
@@ -33,7 +41,7 @@ public class cultivoControlador {
 		}
 		
 		//getPCultivoId
-		@GetMapping("/buscarcultivo/{id}")
+		@GetMapping("buscarcultivo/{id}")
 		public ResponseEntity<Cultivo> getCultivoId(@PathVariable(value = "id") Long id_cultivo)
 			throws ResourceNotFoundException{
 				Cultivo cultivo = cultivoServicio.findById(id_cultivo)
@@ -45,6 +53,16 @@ public class cultivoControlador {
 		@PostMapping("cultivo")
 		public Cultivo crearCultivo(@RequestBody Cultivo cultivo) {
 			return this.cultivoServicio.save(cultivo);
+		}
+		
+		//Asignar Cultivo
+		
+		@PostMapping("cultivo/terreno{id_terreno}")
+		public Cultivo asignarCultivo(@PathVariable (value = "id_terreno")Long id_terreno,@Valid @RequestBody Cultivo cultivo)throws ResourceNotFoundException {
+			return terrenoServicio.findById(id_terreno).map(terr ->{
+				cultivo.setTerreno(terr);
+				return cultivoServicio.save(cultivo);
+			}).orElseThrow(()-> new ResourceNotFoundException("No existe un Terreno con ese ID"));
 		}
 		
 		//updateCultivo
@@ -60,4 +78,15 @@ public class cultivoControlador {
 			return ResponseEntity.ok(this.cultivoServicio.save(cultivo));
 		}
 		//deleteCultivo
+		@DeleteMapping("cultivo/{id}")
+		public Map<String, Boolean> deleteCultivo(@PathVariable(value = "id")Long id_cultivo) throws ResourceNotFoundException{
+			Cultivo cultivo = cultivoServicio.findById(id_cultivo)
+					.orElseThrow(()-> new ResourceNotFoundException("No existe el Cultivo con el ID: "+id_cultivo));
+			this.cultivoServicio.delete(cultivo);
+			
+			Map<String, Boolean> response = new HashMap<>();
+			response.put("Se elimino el Cultivo", Boolean.TRUE);
+			
+			return response;
+		}
 }

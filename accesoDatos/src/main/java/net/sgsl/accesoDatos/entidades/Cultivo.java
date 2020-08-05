@@ -19,6 +19,10 @@ public class Cultivo {
 	@Column(name = "fecha_cult")
 	private String fecha_cult;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_terreno")
+	private Terreno terreno;
+	
 	public Cultivo() {
 		super();
 	}
@@ -59,4 +63,8 @@ public class Cultivo {
 	public void setFecha_cult(String fecha_cult) {
 		this.fecha_cult = fecha_cult;
 	}
+	public void setTerreno(Terreno terreno) {
+		this.terreno = terreno;
+	}
+	
 }

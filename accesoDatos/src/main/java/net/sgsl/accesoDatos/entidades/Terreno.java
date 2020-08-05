@@ -1,12 +1,17 @@
 package net.sgsl.accesoDatos.entidades;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +31,10 @@ public class Terreno {
 	
 	@ManyToOne
 	@JoinColumn(name="id_productor")
-	private Productor productor;
+	private Productor produc;
+	
+	@OneToMany(mappedBy="terreno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Cultivo> cultivos;
 	
 	public Terreno() {
 		super();
@@ -59,13 +67,15 @@ public class Terreno {
 		this.cant_hect = cant_hect;
 	}
 
-	public Productor getProductor() {
-		return productor;
+	public void setProductor(Productor produc) {
+		this.produc = produc;
 	}
 
-	public void setProductor(Productor productor) {
-		this.productor = productor;
+	public Set<Cultivo> getCultivos() {
+		return cultivos;
 	}
-	
-	
+
+	public void setCultivos(Set<Cultivo> cultivos) {
+		this.cultivos = cultivos;
+	}	
 }

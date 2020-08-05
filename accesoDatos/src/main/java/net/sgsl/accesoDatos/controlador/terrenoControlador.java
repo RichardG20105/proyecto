@@ -71,7 +71,7 @@ public class terrenoControlador {
 	}
 	
 	
-	
+
 
 	// update terreno mediante su id
 	
