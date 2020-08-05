@@ -15,13 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="terreno")
+@Table(name="Terreno")
 public class Terreno {
 		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_terreno")
-	private long id_terreno;
+	private Long id_terreno;
 	
 	@Column (name="direccion_terreno")
 	private String direccion_terreno ;
@@ -40,17 +40,22 @@ public class Terreno {
 		super();
 	}
 	
-	 public Terreno(String direccion_terreno, int cant_hect) {
-			super();
-			
-			this.direccion_terreno = direccion_terreno;
-			this.cant_hect = cant_hect;
-			
-		}
-	public long getId_terreno() {
-		return id_terreno;
+	public Terreno(String direccion_terreno, Integer cant_hect, Productor produc, Set<Cultivo> cultivos) {
+		super();
+		this.direccion_terreno = direccion_terreno;
+		this.cant_hect = cant_hect;
+		this.produc = produc;
+		this.cultivos = cultivos;
 	}
 	
+	public Long getId_terreno() {
+		return id_terreno;
+	}
+
+	public void setId_terreno(Long id_terreno) {
+		this.id_terreno = id_terreno;
+	}
+
 	public String getDireccion_terreno() {
 		return direccion_terreno;
 	}
@@ -59,15 +64,15 @@ public class Terreno {
 		this.direccion_terreno = direccion_terreno;
 	}
 
-	public int getCant_hect() {
+	public Integer getCant_hect() {
 		return cant_hect;
 	}
 
-	public void setCant_hect(int cant_hect) {
+	public void setCant_hect(Integer cant_hect) {
 		this.cant_hect = cant_hect;
 	}
 
-	public void setProductor(Productor produc) {
+	public void setProduc(Productor produc) {
 		this.produc = produc;
 	}
 
@@ -77,5 +82,6 @@ public class Terreno {
 
 	public void setCultivos(Set<Cultivo> cultivos) {
 		this.cultivos = cultivos;
-	}	
+	}
+	
 }

@@ -14,7 +14,7 @@ public class Productor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_productor")
-	private long id_productor;
+	private Long id_productor;
 	
 	@Column(name = "cedula")
 	private String cedula;

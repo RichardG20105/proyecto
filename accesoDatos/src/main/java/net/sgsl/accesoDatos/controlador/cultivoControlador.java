@@ -75,15 +75,12 @@ public class cultivoControlador {
 			}).orElseThrow(()-> new ResourceNotFoundException("No existe el Cultivo con el ID: "+id_cultivo));			
 		}
 		//deleteCultivo
-		@DeleteMapping("cultivo/{id}")
-		public Map<String, Boolean> deleteCultivo(@PathVariable(value = "id")Long id_cultivo) throws ResourceNotFoundException{
-			Cultivo cultivo = cultivoServicio.findById(id_cultivo)
-					.orElseThrow(()-> new ResourceNotFoundException("No existe el Cultivo con el ID: "+id_cultivo));
-			this.cultivoServicio.delete(cultivo);
-			
-			Map<String, Boolean> response = new HashMap<>();
-			response.put("Se elimino el Cultivo", Boolean.TRUE);
-			
-			return response;
+		@DeleteMapping("terreno/{id_terr}/cultivo/{id_cul}")
+		public ResponseEntity<?> deleteCultivo(@PathVariable(value="id_terr")Long id_terreno,
+				@PathVariable(value = "id_cul")Long id_cultivo) throws ResourceNotFoundException{
+			return cultivoServicio.findByCultivoAndTerreno(id_terreno,id_cultivo).map(cul->{
+				cultivoServicio.delete(cul);
+				return ResponseEntity.ok().build();
+			}).orElseThrow(()->new ResourceNotFoundException("No existe el Terreno con el ID: "+id_terreno+" o el Cultivo con el Id: "+id_cultivo));
 		}
 }
