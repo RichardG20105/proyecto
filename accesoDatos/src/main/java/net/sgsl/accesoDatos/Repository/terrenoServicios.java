@@ -9,6 +9,4 @@ import net.sgsl.accesoDatos.entidades.Terreno;
 
 public interface terrenoServicios extends JpaRepository< Terreno , Long> {
 	
-	boolean existsById(long id_terreno);
-	
 }

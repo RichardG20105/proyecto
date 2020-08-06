@@ -38,7 +38,7 @@ public class Productor {
 	}
 	
 	public Productor(String cedula, String nombre, String apellido, String direccion, String email,
-			Set<Telefono> telefonos) {
+			Set<Telefono> telefonos, Set<Terreno> terrenos) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
@@ -46,9 +46,10 @@ public class Productor {
 		this.direccion = direccion;
 		this.email = email;
 		this.telefonos = telefonos;
+		this.terrenos = terrenos;
 	}
 
-	public long getId_productor() {
+	public Long getId_productor() {
 		return id_productor;
 	}
 	public void setId_productor(long id_productor) {
@@ -100,6 +101,5 @@ public class Productor {
 	public void setTerrenos(Set<Terreno> terrenos) {
 		this.terrenos = terrenos;
 	}
-	
 	
 }

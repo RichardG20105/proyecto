@@ -35,13 +35,10 @@ public class terrenoControlador {
 	private productorServicios productorServicio;
 	
 	 // listado de todos los terrenos
-	
 	@GetMapping ("buscarTerrenos")
 	public List< Terreno > getTerrenos(){
 		 return this.terrenoServicio.findAll();
 	}
-	
-	
 	// listar el terreno buscado por su id
 	
 	@GetMapping ("buscarTerreno/{id}")
@@ -85,6 +82,4 @@ public class terrenoControlador {
 		        response.put("delete", Boolean.TRUE);
 		   return response;
 	}
-	
-
 }

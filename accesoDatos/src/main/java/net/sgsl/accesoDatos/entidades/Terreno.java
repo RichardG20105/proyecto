@@ -40,11 +40,10 @@ public class Terreno {
 		super();
 	}
 	
-	public Terreno(String direccion_terreno, Integer cant_hect, Productor produc, Set<Cultivo> cultivos) {
+	public Terreno(String direccion_terreno, Integer cant_hect, Set<Cultivo> cultivos) {
 		super();
 		this.direccion_terreno = direccion_terreno;
 		this.cant_hect = cant_hect;
-		this.produc = produc;
 		this.cultivos = cultivos;
 	}
 	
