@@ -72,11 +72,7 @@ public class terrenoControlador {
 			terr.setDireccion_terreno(terrenoDetails.getDireccion_terreno());
 			return terrenoServicio.save(terr);
 		}).orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id :"+ id_terreno));
-	}
-	
-	
-	
-	
+	}	
 	// delete terreno mediante su id 
 	@DeleteMapping("eliminarTerreno/{id}")
 	public Map<String,Boolean> deleteTerreno(@PathVariable(value = "id") Long id_terreno) throws ResourceNotFoundException{

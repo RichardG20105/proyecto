@@ -52,8 +52,10 @@ public class productorControlador {
 	
 	//crearProductor
 	@PostMapping("productor")
-	public Productor crearProductor(@Valid @RequestBody Productor productor) {
-		
+	public Productor crearProductor(@Valid @RequestBody Productor productor) throws ResourceNotFoundException {
+		if(!productorServicio.existsByCedula(productor.getCedula())) {
+			throw new ResourceNotFoundException("Ya existe un Productor con esa Cedula");
+		}
 		return this.productorServicio.save(productor);
 	}
 	

@@ -12,6 +12,6 @@ import net.sgsl.accesoDatos.entidades.Productor;
 
 @Repository
 public interface productorServicios extends JpaRepository<Productor, Long>{
-	
+	Boolean existsByCedula(String Cedula);
 	List<Productor> findByCedula(String cedula);
 }
