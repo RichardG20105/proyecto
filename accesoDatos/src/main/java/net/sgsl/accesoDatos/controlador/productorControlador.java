@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.sgsl.accesoDatos.Repository.productorServicios;
-import net.sgsl.accesoDatos.Repository.telefonoServicios;
 import net.sgsl.accesoDatos.entidades.Productor;
-import net.sgsl.accesoDatos.controlador.telefonoControlador;
 import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 @RestController
@@ -32,22 +30,19 @@ public class productorControlador {
 	@Autowired
 	private productorServicios productorServicio;
 	
-	@Autowired
-	private telefonoServicios telefonoServicio;
-	
 	//getProductores
-	@GetMapping("productor")
+	@GetMapping("buscarproductores")
 	public List<Productor> getProductores(){
 		return this.productorServicio.findAll();
 	}
 	
 	//getProductorCedula
-	@GetMapping("/buscarproductor/{ced}")
+	@GetMapping("buscarproductor/{ced}")
 	public ResponseEntity<List<Productor>> getProductorCed(@PathVariable(value = "ced") String cedula) {
 		List<Productor> productor = productorServicio.findByCedula(cedula);	
 		return ResponseEntity.ok().body(productor);
 	}
-	@GetMapping("/buscarproductorid/{id}")
+	@GetMapping("buscarproductorid/{id}")
 	public ResponseEntity<Productor> getProductorId(@PathVariable(value = "id") Long id_productor)
 		throws ResourceNotFoundException{
 			Productor productor = productorServicio.findById(id_productor)

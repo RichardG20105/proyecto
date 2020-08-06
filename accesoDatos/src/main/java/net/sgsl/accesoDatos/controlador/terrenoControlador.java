@@ -60,14 +60,18 @@ public class terrenoControlador {
 		}).orElseThrow(()-> new ResourceNotFoundException("No existe el Productor con el ID: "+id_productor));
 	}
 	// update terreno mediante su id	
-	@PutMapping("terreno/{id}")
-	public ResponseEntity<Terreno> updateTerreno(@PathVariable(value = "id") Long id_terreno ,@Valid @RequestBody Terreno terrenoDetails) throws ResourceNotFoundException{
-		Terreno terreno = terrenoServicio.findById(id_terreno)
-				.orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id :"+ id_terreno));
-		terreno.setDireccion_terreno(terrenoDetails.getDireccion_terreno());
-		terreno.setCant_hect(terrenoDetails.getCant_hect());
-		
-		return ResponseEntity.ok(this.terrenoServicio.save(terreno));
+	@PutMapping("{id_productor}/terreno/{id_terreno}")
+	public Terreno updateTerreno(@PathVariable(value = "id_terreno") Long id_terreno ,
+			@PathVariable(value="id_productor")Long id_productor,
+			@Valid @RequestBody Terreno terrenoDetails) throws ResourceNotFoundException{
+		if(!productorServicio.existsById(id_productor)) {
+			throw new ResourceNotFoundException("No existe el Productor con el ID: "+id_productor);
+		}
+		return terrenoServicio.findById(id_terreno).map(terr->{
+			terr.setCant_hect(terrenoDetails.getCant_hect());
+			terr.setDireccion_terreno(terrenoDetails.getDireccion_terreno());
+			return terrenoServicio.save(terr);
+		}).orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id :"+ id_terreno));
 	}
 	
 	
