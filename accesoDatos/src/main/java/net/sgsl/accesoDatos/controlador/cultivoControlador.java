@@ -26,7 +26,7 @@ import net.sgsl.accesoDatos.exception.ResourceNotFoundException;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/terrenos/")
+@RequestMapping("/cultivos/")
 public class cultivoControlador {
 	@Autowired
 	private cultivoServicios cultivoServicio;
@@ -47,6 +47,12 @@ public class cultivoControlador {
 				Cultivo cultivo = cultivoServicio.findById(id_cultivo)
 				.orElseThrow(() -> new ResourceNotFoundException("No existe el Cultivo con el id ::"+id_cultivo));
 				return ResponseEntity.ok().body(cultivo);
+		}
+		
+		//Cultivo por id Terreno
+		@GetMapping("cultivoterreno/{id_terreno}")
+		public List<Cultivo> getCultivosTerreno(@PathVariable(value = "id_terreno")Long id_terreno){
+			return this.cultivoServicio.findByIdTerreno(id_terreno);
 		}
 		
 		//crearCultivo
@@ -78,7 +84,7 @@ public class cultivoControlador {
 		@DeleteMapping("terreno/{id_terr}/cultivo/{id_cul}")
 		public ResponseEntity<?> deleteCultivo(@PathVariable(value="id_terr")Long id_terreno,
 				@PathVariable(value = "id_cul")Long id_cultivo) throws ResourceNotFoundException{
-			return cultivoServicio.findByCultivoAndTerreno(id_terreno,id_cultivo).map(cul->{
+			return cultivoServicio.findByCultivoAndTerreno(id_cultivo,id_terreno).map(cul->{
 				cultivoServicio.delete(cul);
 				return ResponseEntity.ok().build();
 			}).orElseThrow(()->new ResourceNotFoundException("No existe el Terreno con el ID: "+id_terreno+" o el Cultivo con el Id: "+id_cultivo));

@@ -48,6 +48,12 @@ public class terrenoControlador {
 				.orElseThrow(() -> new ResourceNotFoundException("No existe el terreno con el id ::"+ id_terreno));
 				return ResponseEntity.ok().body(terrenos);
 	}
+	
+	//Lista por IdProductor
+	@GetMapping("terreno/{id_productor}")
+	public List<Terreno> getTerrenoIdProductor(@PathVariable(value = "id_productor")Long id_productor){
+		return this.terrenoServicio.findByIdProductor(id_productor);
+	}
 	// save terreno
 	@PostMapping("{id_productor}/terreno")
 	public Terreno crearTerreno(@PathVariable(value = "id_productor")Long id_productor,@Valid @RequestBody Terreno terreno)throws ResourceNotFoundException {

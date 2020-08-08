@@ -27,7 +27,7 @@ public class Terreno {
 	private String direccion_terreno ;
 	
 	@Column (name="cant_hect")
-	private int cant_hect;
+	private Integer cant_hect;
 	
 	@ManyToOne
 	@JoinColumn(name="id_productor")
